@@ -1,25 +1,25 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Nav from "../../components/Nav";
 
-export default function SubscribePage() {
+function SubscribeClientLogic() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); 
 
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [messageType, setMessageType] = useState<"success" | "error" | null>(null);
 
   // subscription state pulled from /api/check-usage
   const [checkingSub, setCheckingSub] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState<boolean | null>(null);
-  const [subLoading, setSubLoading] = useState(false); 
+  const [subLoading, setSubLoading] = useState(false);
 
   const PRICE_ID = process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO || "price_1SSxP4KsBi3XJI5aSUGGrEKz";
 
-  // handle Stripe success/cancel query params
+  // handle Stripe success/cancel query params (rely on searchParams)
   useEffect(() => {
     const success = searchParams.get("success");
     const canceled = searchParams.get("canceled");
@@ -31,7 +31,7 @@ export default function SubscribePage() {
 
       const verifyAndRedirect = async () => {
         let attempts = 0;
-        const maxAttempts = 10; 
+        const maxAttempts = 10;
 
         const checkInterval = setInterval(async () => {
           attempts++;
@@ -169,11 +169,10 @@ export default function SubscribePage() {
       setSubLoading(false);
     }
   };
-
+  
+  // Return the main content JSX from your original component
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-6 sm:pl-28 sm:pr-8 pt-20 sm:pt-24">
-      <Nav />
-
+    <>
       <div className="max-w-3xl mx-auto p-6 py-12">
         <div className="text-center mb-8">
           <h2 className="text-4xl font-bold mb-2 text-purple-100">Upgrade to Pro</h2>
@@ -294,6 +293,37 @@ export default function SubscribePage() {
           </div>
         </div>
       )}
+    </>
+  );
+}
+
+// --- END: Inner Component (Protected Zone) ---
+
+function LoadingFallback() {
+  return (
+    <div className="max-w-3xl mx-auto p-6 py-12 text-center text-white">
+      <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-400 rounded-full animate-spin inline-block mr-2" />
+      Loading page details...
+    </div>
+  );
+}
+
+
+// --- START: Main Page Component (The Suspense Boundary) ---
+
+export default function SubscribePage() {
+  return (
+    // Outer div for the background/layout that doesn't need searchParams
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-6 sm:pl-28 sm:pr-8 pt-20 sm:pt-24">
+      <Nav /> 
+      
+      {/* This is the required Suspense boundary. 
+        It prevents the component using useSearchParams() (SubscribeClientLogic) 
+        from running during the server-side build. 
+      */}
+      <Suspense fallback={<LoadingFallback />}>
+        <SubscribeClientLogic />
+      </Suspense>
     </div>
   );
 }
