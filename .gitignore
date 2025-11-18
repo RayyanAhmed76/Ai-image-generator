@@ -14,11 +14,17 @@
 /coverage
 
 # next.js
+<<<<<<< HEAD
 
 /out/
 
 # production
 
+=======
+/out/
+
+# production
+>>>>>>> d4392207694e8c2d45b45a5ce800d6b8a313a149
 
 # misc
 .DS_Store
