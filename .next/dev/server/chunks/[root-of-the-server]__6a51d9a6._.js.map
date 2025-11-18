@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Administrator/Desktop/my-flux-saas/app/api/logout/route.ts"],"sourcesContent":["\r\nimport { NextResponse } from \"next/server\";\r\n\r\nexport async function POST() {\r\n  const res = NextResponse.json({ success: true });\r\n  res.cookies.set({\r\n    name: \"flux_auth\",\r\n    value: \"\",\r\n    httpOnly: true,\r\n    path: \"/\",\r\n    maxAge: 0,\r\n  });\r\n  return res;\r\n}\r\n"],"names":[],"mappings":";;;;AACA;;AAEO,eAAe;IACpB,MAAM,MAAM,gJAAY,CAAC,IAAI,CAAC;QAAE,SAAS;IAAK;IAC9C,IAAI,OAAO,CAAC,GAAG,CAAC;QACd,MAAM;QACN,OAAO;QACP,UAAU;QACV,MAAM;QACN,QAAQ;IACV;IACA,OAAO;AACT","debugId":null}}]
+}

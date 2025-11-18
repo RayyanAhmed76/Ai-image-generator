@@ -1,0 +1,68 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/[root-of-the-server]__844fb275._.js",
+"[externals]/node:buffer [external] (node:buffer, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("node:buffer", () => require("node:buffer"));
+
+module.exports = mod;
+}),
+"[externals]/node:async_hooks [external] (node:async_hooks, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("node:async_hooks", () => require("node:async_hooks"));
+
+module.exports = mod;
+}),
+"[project]/my-flux-saas/middleware.ts [middleware-edge] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+// middleware.ts
+__turbopack_context__.s([
+    "config",
+    ()=>config,
+    "middleware",
+    ()=>middleware
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$my$2d$flux$2d$saas$2f$node_modules$2f$next$2f$dist$2f$esm$2f$api$2f$server$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/my-flux-saas/node_modules/next/dist/esm/api/server.js [middleware-edge] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$my$2d$flux$2d$saas$2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/my-flux-saas/node_modules/next/dist/esm/server/web/exports/index.js [middleware-edge] (ecmascript)");
+;
+function middleware(req) {
+    const { pathname } = req.nextUrl;
+    // allow public paths
+    if (pathname.startsWith("/api") || pathname.startsWith("/_next") || pathname.startsWith("/static") || pathname === "/favicon.ico" || pathname.startsWith("/login") || pathname.startsWith("/about")) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$my$2d$flux$2d$saas$2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
+    }
+    // check auth cookie
+    const cookie = req.cookies.get("flux_auth")?.value;
+    if (!cookie) {
+        // If accessing root path, redirect to about page
+        if (pathname === "/") {
+            const aboutUrl = req.nextUrl.clone();
+            aboutUrl.pathname = "/about";
+            return __TURBOPACK__imported__module__$5b$project$5d2f$my$2d$flux$2d$saas$2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(aboutUrl);
+        }
+        // For other protected paths, redirect to login
+        const loginUrl = req.nextUrl.clone();
+        loginUrl.pathname = "/login";
+        // optionally include returnTo param:
+        loginUrl.searchParams.set("returnTo", pathname);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$my$2d$flux$2d$saas$2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(loginUrl);
+    }
+    // authenticated
+    return __TURBOPACK__imported__module__$5b$project$5d2f$my$2d$flux$2d$saas$2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
+}
+const config = {
+    matcher: [
+        /*
+      Match all paths except:
+      - /login
+      - /api/*
+      - /_next/*
+      - /static/*
+      - /favicon.ico
+    */ "/((?!api|_next|static|favicon.ico|login).*)",
+        "/"
+    ]
+};
+}),
+]);
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__844fb275._.js.map

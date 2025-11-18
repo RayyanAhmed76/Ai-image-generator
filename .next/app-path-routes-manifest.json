@@ -1,0 +1,21 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/about/page": "/about",
+  "/account/page": "/account",
+  "/api/check-usage/route": "/api/check-usage",
+  "/api/checkout/route": "/api/checkout",
+  "/api/create-portal-session/route": "/api/create-portal-session",
+  "/api/fetch-image/route": "/api/fetch-image",
+  "/api/fetch_result/route": "/api/fetch_result",
+  "/api/generate/route": "/api/generate",
+  "/api/login/route": "/api/login",
+  "/api/logout/route": "/api/logout",
+  "/api/signup/route": "/api/signup",
+  "/api/verify-session/route": "/api/verify-session",
+  "/api/webhook/route": "/api/webhook",
+  "/favicon.ico/route": "/favicon.ico",
+  "/login/page": "/login",
+  "/page": "/",
+  "/subscribe/page": "/subscribe"
+}
