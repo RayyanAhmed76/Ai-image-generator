@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -48,16 +47,20 @@ export default function LoginPage(): JSX.Element {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+        credentials: "include",
       });
 
       if (res.ok) {
         // login/signup succeeded; server set httpOnly cookie
-        router.replace("/"); 
+        router.replace("/");
         return;
       }
 
       const data = await res.json().catch(() => null);
-      setError(data?.error || (isSignup ? "Signup failed." : "Login failed. Check credentials."));
+      setError(
+        data?.error ||
+          (isSignup ? "Signup failed." : "Login failed. Check credentials.")
+      );
     } catch (err) {
       setError("Network error. Try again.");
     } finally {
@@ -68,15 +71,12 @@ export default function LoginPage(): JSX.Element {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 p-6">
       <div className="w-full max-w-md bg-purple-800/30 backdrop-blur-sm border border-purple-700/50 rounded-2xl shadow-lg p-8">
-        
         <div className="mb-4 flex justify-center">
-          
           <img
             src="/logo.png"
             alt="App logo"
             className="w-20 h-20 object-contain rounded-md"
             onError={(e) => {
-
               (e.target as HTMLImageElement).style.display = "none";
             }}
           />
@@ -121,7 +121,9 @@ export default function LoginPage(): JSX.Element {
         <form onSubmit={onSubmit} className="space-y-4">
           {isSignup && (
             <div>
-              <label className="block text-xs font-medium text-purple-200 mb-1">Email</label>
+              <label className="block text-xs font-medium text-purple-200 mb-1">
+                Email
+              </label>
               <input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -147,7 +149,9 @@ export default function LoginPage(): JSX.Element {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-purple-200 mb-1">Password</label>
+            <label className="block text-xs font-medium text-purple-200 mb-1">
+              Password
+            </label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -158,7 +162,11 @@ export default function LoginPage(): JSX.Element {
             />
           </div>
 
-          {error && <div className="text-sm text-red-300 bg-red-900/30 border border-red-700/50 p-3 rounded-lg">{error}</div>}
+          {error && (
+            <div className="text-sm text-red-300 bg-red-900/30 border border-red-700/50 p-3 rounded-lg">
+              {error}
+            </div>
+          )}
 
           <button
             type="submit"

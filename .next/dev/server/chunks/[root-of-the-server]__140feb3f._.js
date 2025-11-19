@@ -87,6 +87,8 @@ module.exports = mod;
 "use strict";
 
 __turbopack_context__.s([
+    "default",
+    ()=>__TURBOPACK__default__export__,
     "prisma",
     ()=>prisma
 ]);
@@ -95,6 +97,7 @@ var __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$ex
 const globalForPrisma = globalThis;
 const prisma = globalForPrisma.prisma ?? new __TURBOPACK__imported__module__$5b$externals$5d2f40$prisma$2f$client__$5b$external$5d$__$2840$prisma$2f$client$2c$__cjs$29$__["PrismaClient"]();
 if ("TURBOPACK compile-time truthy", 1) globalForPrisma.prisma = prisma;
+const __TURBOPACK__default__export__ = prisma;
 }),
 "[project]/lib/auth.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
 "use strict";

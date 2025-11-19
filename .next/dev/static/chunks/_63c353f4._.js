@@ -73,93 +73,85 @@ function AboutPage() {
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "jsx-a1ddc9148f2f361a" + " " + "min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 pt-20 sm:pt-24 relative",
+        className: "jsx-dda94a46d8a9a309" + " " + "min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 pt-20 sm:pt-24 relative",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-a1ddc9148f2f361a" + " " + "relative overflow-hidden",
+                className: "jsx-dda94a46d8a9a309" + " " + "relative overflow-visible",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "max-w-7xl mx-auto px-6 py-20 sm:py-32",
+                        className: "jsx-dda94a46d8a9a309" + " " + "max-w-7xl mx-auto px-6 py-20 sm:py-32",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "jsx-a1ddc9148f2f361a" + " " + "text-center",
+                            className: "jsx-dda94a46d8a9a309" + " " + "text-center",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                    className: "jsx-a1ddc9148f2f361a" + " " + "text-5xl sm:text-6xl md:text-7xl font-extrabold text-purple-100 mb-6",
+                                    className: "jsx-dda94a46d8a9a309" + " " + "text-5xl sm:text-6xl md:text-7xl font-extrabold text-purple-100 mb-6 leading-tight sm:leading-snug md:leading-snug",
                                     children: [
                                         "Transform Images with",
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "jsx-a1ddc9148f2f361a" + " " + "block bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent",
+                                            className: "jsx-dda94a46d8a9a309" + " " + "block bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent",
                                             children: "AI Magic"
                                         }, void 0, false, {
                                             fileName: "[project]/app/about/page.tsx",
-                                            lineNumber: 69,
+                                            lineNumber: 73,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/about/page.tsx",
-                                    lineNumber: 67,
+                                    lineNumber: 71,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "jsx-a1ddc9148f2f361a" + " " + "text-xl sm:text-2xl text-purple-200 max-w-3xl mx-auto mb-12 leading-relaxed",
+                                    className: "jsx-dda94a46d8a9a309" + " " + "text-xl sm:text-2xl text-purple-200 max-w-3xl mx-auto mb-12 leading-relaxed",
                                     children: "Upload any image, write a prompt, and watch as AI transforms it according to your vision. Add elements, remove objects, change styles all with simple text commands."
                                 }, void 0, false, {
                                     fileName: "[project]/app/about/page.tsx",
-                                    lineNumber: 73,
+                                    lineNumber: 77,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "jsx-a1ddc9148f2f361a" + " " + "flex flex-col sm:flex-row gap-4 justify-center items-center",
+                                    className: "jsx-dda94a46d8a9a309" + " " + "flex flex-col sm:flex-row gap-4 justify-center items-center",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: handleGetStarted,
                                             "aria-label": "Get started",
-                                            className: "jsx-a1ddc9148f2f361a" + " " + "z-20 pointer-events-auto px-8 py-4 cursor-pointer bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
+                                            className: "jsx-dda94a46d8a9a309" + " " + "z-20 pointer-events-auto px-8 py-4 cursor-pointer bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
                                             children: "Get Started"
                                         }, void 0, false, {
                                             fileName: "[project]/app/about/page.tsx",
-                                            lineNumber: 78,
+                                            lineNumber: 83,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             onClick: handleGetStarted,
                                             "aria-label": "Try demo",
-                                            className: "jsx-a1ddc9148f2f361a" + " " + "z-20 pointer-events-auto px-8 py-4 bg-purple-800/50 cursor-pointer text-purple-100 border-2 border-purple-600/50 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg hover:bg-purple-800/70 transform hover:scale-105 transition-all duration-200",
+                                            className: "jsx-dda94a46d8a9a309" + " " + "z-20 pointer-events-auto px-8 py-4 bg-purple-800/50 cursor-pointer text-purple-100 border-2 border-purple-600/50 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg hover:bg-purple-800/70 transform hover:scale-105 transition-all duration-200",
                                             children: "Try Demo"
                                         }, void 0, false, {
                                             fileName: "[project]/app/about/page.tsx",
-                                            lineNumber: 85,
+                                            lineNumber: 90,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/about/page.tsx",
-                                    lineNumber: 77,
+                                    lineNumber: 82,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/about/page.tsx",
-                            lineNumber: 66,
+                            lineNumber: 70,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 65,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         "aria-hidden": "true",
-                        className: "jsx-a1ddc9148f2f361a" + " " + "absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-2xl opacity-20 blur-xl animate-pulse pointer-events-none"
-                    }, void 0, false, {
-                        fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 97,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        "aria-hidden": "true",
-                        className: "jsx-a1ddc9148f2f361a" + " " + "absolute top-40 right-20 w-40 h-40 bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl opacity-20 blur-xl animate-pulse delay-1000 pointer-events-none"
+                        className: "jsx-dda94a46d8a9a309" + " " + "absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-2xl opacity-20 blur-xl animate-pulse pointer-events-none"
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
                         lineNumber: 101,
@@ -167,182 +159,157 @@ function AboutPage() {
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         "aria-hidden": "true",
-                        className: "jsx-a1ddc9148f2f361a" + " " + "absolute bottom-20 left-1/4 w-36 h-36 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl opacity-20 blur-xl animate-pulse delay-2000 pointer-events-none"
+                        className: "jsx-dda94a46d8a9a309" + " " + "absolute top-40 right-20 w-40 h-40 bg-gradient-to-br from-orange-400 to-pink-500 rounded-2xl opacity-20 blur-xl animate-pulse delay-1000 pointer-events-none"
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
                         lineNumber: 105,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        "aria-hidden": "true",
+                        className: "jsx-dda94a46d8a9a309" + " " + "absolute bottom-20 left-1/4 w-36 h-36 bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl opacity-20 blur-xl animate-pulse delay-2000 pointer-events-none"
+                    }, void 0, false, {
+                        fileName: "[project]/app/about/page.tsx",
+                        lineNumber: 109,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/about/page.tsx",
-                lineNumber: 64,
+                lineNumber: 68,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-a1ddc9148f2f361a" + " " + "max-w-7xl mx-auto px-6 py-20",
+                className: "jsx-dda94a46d8a9a309" + " " + "max-w-7xl mx-auto px-6 py-20",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "text-4xl font-bold text-center text-purple-100 mb-16",
+                        className: "jsx-dda94a46d8a9a309" + " " + "text-4xl font-bold text-center text-purple-100 mb-16",
                         children: "Powerful Features"
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 113,
+                        lineNumber: 117,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8",
+                        className: "jsx-dda94a46d8a9a309" + " " + "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8",
                         children: features.map((feature, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 onMouseEnter: ()=>setHoveredFeature(index),
                                 onMouseLeave: ()=>setHoveredFeature(null),
-                                className: "jsx-a1ddc9148f2f361a" + " " + `bg-gray-800/40 backdrop-blur-sm border border-purple-700/30 rounded-2xl p-6 shadow-lg transition-all duration-300 ${hoveredFeature === index ? "transform scale-105 shadow-2xl border-2 border-purple-500" : "hover:shadow-xl"}`,
+                                className: "jsx-dda94a46d8a9a309" + " " + `bg-gray-800/40 backdrop-blur-sm border border-purple-700/30 rounded-2xl p-6 shadow-lg transition-all duration-300 ${hoveredFeature === index ? "transform scale-105 shadow-2xl border-2 border-purple-500" : "hover:shadow-xl"}`,
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-5xl mb-4",
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-5xl mb-4",
                                         children: feature.icon
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 132,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-xl font-bold text-purple-100 mb-2",
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-xl font-bold text-purple-100 mb-2",
                                         children: feature.title
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 129,
+                                        lineNumber: 133,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-purple-200",
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-purple-200",
                                         children: feature.description
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 130,
+                                        lineNumber: 136,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/app/about/page.tsx",
-                                lineNumber: 118,
+                                lineNumber: 122,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 116,
+                        lineNumber: 120,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/about/page.tsx",
-                lineNumber: 112,
+                lineNumber: 116,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-a1ddc9148f2f361a" + " " + "max-w-7xl mx-auto px-6 py-20 bg-gray-800/40 backdrop-blur-sm border border-purple-700/30 rounded-3xl mx-6 mb-20",
+                className: "jsx-dda94a46d8a9a309" + " " + "max-w-7xl mx-auto px-6 py-20 bg-gray-800/40 backdrop-blur-sm border border-purple-700/30 rounded-3xl mx-6 mb-20",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "text-4xl font-bold text-center text-purple-100 mb-16",
+                        className: "jsx-dda94a46d8a9a309" + " " + "text-4xl font-bold text-center text-purple-100 mb-16",
                         children: "How It Works"
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 138,
+                        lineNumber: 144,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "grid grid-cols-1 md:grid-cols-3 gap-12",
+                        className: "jsx-dda94a46d8a9a309" + " " + "grid grid-cols-1 md:grid-cols-3 gap-12",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-a1ddc9148f2f361a" + " " + "text-center",
+                                className: "jsx-dda94a46d8a9a309" + " " + "text-center",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6",
+                                        className: "jsx-dda94a46d8a9a309" + " " + "w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6",
                                         children: "1"
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 143,
+                                        lineNumber: 149,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-2xl font-bold text-purple-100 mb-4",
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-2xl font-bold text-purple-100 mb-4",
                                         children: "Upload Image"
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 146,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-purple-200",
-                                        children: "Simply drag and drop or select an image from your device. We support all common image formats."
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 147,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/app/about/page.tsx",
-                                lineNumber: 142,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-a1ddc9148f2f361a" + " " + "text-center",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6",
-                                        children: "2"
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
                                         lineNumber: 152,
                                         columnNumber: 13
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-2xl font-bold text-purple-100 mb-4",
-                                        children: "Write Prompt"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-purple-200",
+                                        children: "Simply drag and drop or select an image from your device. We support all common image formats."
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
                                         lineNumber: 155,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-purple-200",
-                                        children: "Describe what you want to change. Add a sunset, remove the background, or transform the style."
-                                    }, void 0, false, {
-                                        fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 156,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/about/page.tsx",
-                                lineNumber: 151,
+                                lineNumber: 148,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "jsx-a1ddc9148f2f361a" + " " + "text-center",
+                                className: "jsx-dda94a46d8a9a309" + " " + "text-center",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6",
-                                        children: "3"
+                                        className: "jsx-dda94a46d8a9a309" + " " + "w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6",
+                                        children: "2"
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
                                         lineNumber: 161,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-2xl font-bold text-purple-100 mb-4",
-                                        children: "Get Results"
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-2xl font-bold text-purple-100 mb-4",
+                                        children: "Write Prompt"
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
                                         lineNumber: 164,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "jsx-a1ddc9148f2f361a" + " " + "text-purple-200",
-                                        children: "Watch as AI transforms your image in seconds. Download, share, or edit again."
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-purple-200",
+                                        children: "Describe what you want to change. Add a sunset, remove the background, or transform the style."
                                     }, void 0, false, {
                                         fileName: "[project]/app/about/page.tsx",
-                                        lineNumber: 165,
+                                        lineNumber: 167,
                                         columnNumber: 13
                                     }, this)
                                 ]
@@ -350,62 +317,95 @@ function AboutPage() {
                                 fileName: "[project]/app/about/page.tsx",
                                 lineNumber: 160,
                                 columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "jsx-dda94a46d8a9a309" + " " + "text-center",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "jsx-dda94a46d8a9a309" + " " + "w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6",
+                                        children: "3"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/about/page.tsx",
+                                        lineNumber: 173,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-2xl font-bold text-purple-100 mb-4",
+                                        children: "Get Results"
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/about/page.tsx",
+                                        lineNumber: 176,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "jsx-dda94a46d8a9a309" + " " + "text-purple-200",
+                                        children: "Watch as AI transforms your image in seconds. Download, share, or edit again."
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/about/page.tsx",
+                                        lineNumber: 179,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/app/about/page.tsx",
+                                lineNumber: 172,
+                                columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 141,
+                        lineNumber: 147,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/about/page.tsx",
-                lineNumber: 137,
+                lineNumber: 143,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "jsx-a1ddc9148f2f361a" + " " + "max-w-4xl mx-auto px-6 py-20 text-center",
+                className: "jsx-dda94a46d8a9a309" + " " + "max-w-4xl mx-auto px-6 py-20 text-center",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "text-4xl font-bold text-purple-100 mb-6",
+                        className: "jsx-dda94a46d8a9a309" + " " + "text-4xl font-bold text-purple-100 mb-6",
                         children: "Ready to Transform Your Images?"
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 174,
+                        lineNumber: 188,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "jsx-a1ddc9148f2f361a" + " " + "text-xl text-purple-200 mb-10",
+                        className: "jsx-dda94a46d8a9a309" + " " + "text-xl text-purple-200 mb-10",
                         children: "Join thousands of creators using AI to bring their visions to life."
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 177,
+                        lineNumber: 191,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: handleGetStarted,
                         "aria-label": "Start creating now",
-                        className: "jsx-a1ddc9148f2f361a" + " " + "z-20 pointer-events-auto px-10 py-5 cursor-pointer bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl font-semibold text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
+                        className: "jsx-dda94a46d8a9a309" + " " + "z-20 pointer-events-auto px-10 py-5 cursor-pointer bg-gradient-to-r from-sky-500 to-indigo-500 text-white rounded-xl font-semibold text-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
                         children: "Start Creating Now"
                     }, void 0, false, {
                         fileName: "[project]/app/about/page.tsx",
-                        lineNumber: 180,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/about/page.tsx",
-                lineNumber: 173,
+                lineNumber: 187,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$styled$2d$jsx$2f$style$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                id: "a1ddc9148f2f361a",
-                children: "@keyframes pulse{0%,to{opacity:.2}50%{opacity:.3}}.animate-pulse.jsx-a1ddc9148f2f361a{animation:3s cubic-bezier(.4,0,.6,1) infinite pulse}.delay-1000.jsx-a1ddc9148f2f361a{animation-delay:1s}.delay-2000.jsx-a1ddc9148f2f361a{animation-delay:2s}"
+                id: "dda94a46d8a9a309",
+                children: "@keyframes pulse{0%,to{opacity:.2}50%{opacity:.3}}.animate-pulse.jsx-dda94a46d8a9a309{animation:3s cubic-bezier(.4,0,.6,1) infinite pulse}.delay-1000.jsx-dda94a46d8a9a309{animation-delay:1s}.delay-2000.jsx-dda94a46d8a9a309{animation-delay:2s}"
             }, void 0, false, void 0, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/about/page.tsx",
-        lineNumber: 62,
+        lineNumber: 66,
         columnNumber: 5
     }, this);
 }

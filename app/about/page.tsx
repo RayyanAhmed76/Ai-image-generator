@@ -39,40 +39,45 @@ export default function AboutPage() {
     {
       icon: "🎨",
       title: "Transform Any Image",
-      description: "Upload any image and watch it transform according to your creative vision with AI-powered editing.",
+      description:
+        "Upload any image and watch it transform according to your creative vision with AI-powered editing.",
     },
     {
       icon: "✨",
       title: "AI-Powered Magic",
-      description: "Our advanced AI understands your prompts and makes precise changes to your images instantly.",
+      description:
+        "Our advanced AI understands your prompts and makes precise changes to your images instantly.",
     },
     {
       icon: "🚀",
       title: "Lightning Fast",
-      description: "Get results in seconds, not minutes. Experience the speed of cutting-edge AI technology.",
+      description:
+        "Get results in seconds, not minutes. Experience the speed of cutting-edge AI technology.",
     },
     {
       icon: "🎯",
       title: "Precise Control",
-      description: "Add, remove, or modify elements with simple text prompts. Your imagination is the only limit.",
+      description:
+        "Add, remove, or modify elements with simple text prompts. Your imagination is the only limit.",
     },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 pt-20 sm:pt-24 relative">
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-visible">
         <div className="max-w-7xl mx-auto px-6 py-20 sm:py-32">
           <div className="text-center">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-purple-100 mb-6">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-purple-100 mb-6 leading-tight sm:leading-snug md:leading-snug">
               Transform Images with
               <span className="block bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent">
                 AI Magic
               </span>
             </h1>
             <p className="text-xl sm:text-2xl text-purple-200 max-w-3xl mx-auto mb-12 leading-relaxed">
-              Upload any image, write a prompt, and watch as AI transforms it according to your vision. 
-              Add elements, remove objects, change styles all with simple text commands.
+              Upload any image, write a prompt, and watch as AI transforms it
+              according to your vision. Add elements, remove objects, change
+              styles all with simple text commands.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
@@ -92,7 +97,6 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-
 
         <div
           className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-sky-400 to-indigo-500 rounded-2xl opacity-20 blur-xl animate-pulse pointer-events-none"
@@ -126,7 +130,9 @@ export default function AboutPage() {
               }`}
             >
               <div className="text-5xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold text-purple-100 mb-2">{feature.title}</h3>
+              <h3 className="text-xl font-bold text-purple-100 mb-2">
+                {feature.title}
+              </h3>
               <p className="text-purple-200">{feature.description}</p>
             </div>
           ))}
@@ -143,32 +149,40 @@ export default function AboutPage() {
             <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
               1
             </div>
-            <h3 className="text-2xl font-bold text-purple-100 mb-4">Upload Image</h3>
+            <h3 className="text-2xl font-bold text-purple-100 mb-4">
+              Upload Image
+            </h3>
             <p className="text-purple-200">
-              Simply drag and drop or select an image from your device. We support all common image formats.
+              Simply drag and drop or select an image from your device. We
+              support all common image formats.
             </p>
           </div>
           <div className="text-center">
             <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
               2
             </div>
-            <h3 className="text-2xl font-bold text-purple-100 mb-4">Write Prompt</h3>
+            <h3 className="text-2xl font-bold text-purple-100 mb-4">
+              Write Prompt
+            </h3>
             <p className="text-purple-200">
-              Describe what you want to change. Add a sunset, remove the background, or transform the style.
+              Describe what you want to change. Add a sunset, remove the
+              background, or transform the style.
             </p>
           </div>
           <div className="text-center">
             <div className="w-20 h-20 bg-gradient-to-br from-sky-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-6">
               3
             </div>
-            <h3 className="text-2xl font-bold text-purple-100 mb-4">Get Results</h3>
+            <h3 className="text-2xl font-bold text-purple-100 mb-4">
+              Get Results
+            </h3>
             <p className="text-purple-200">
-              Watch as AI transforms your image in seconds. Download, share, or edit again.
+              Watch as AI transforms your image in seconds. Download, share, or
+              edit again.
             </p>
           </div>
         </div>
       </div>
-
 
       <div className="max-w-4xl mx-auto px-6 py-20 text-center">
         <h2 className="text-4xl font-bold text-purple-100 mb-6">
@@ -188,8 +202,13 @@ export default function AboutPage() {
 
       <style jsx>{`
         @keyframes pulse {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.3; }
+          0%,
+          100% {
+            opacity: 0.2;
+          }
+          50% {
+            opacity: 0.3;
+          }
         }
         .animate-pulse {
           animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;

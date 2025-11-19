@@ -6,10 +6,11 @@ import { prisma } from "../../../lib/prisma";
 
 const FREE_TRIES_LIMIT = 2;
 
-
 const stripe =
   process.env.STRIPE_SECRET_KEY && process.env.STRIPE_SECRET_KEY.length > 0
-    ? new Stripe(process.env.STRIPE_SECRET_KEY, { apiVersion: ("2022-11-15" as any) })
+    ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: "2022-11-15" as any,
+      })
     : null;
 
 type SubscriptionShape = {
@@ -27,7 +28,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
-    
     const usageCount = await getUserUsageCount(user.id);
     // default isSubscribed is from user flag, but we'll reconcile with Stripe/subscription below
     let isSubscribed = !!(user as any).isSubscribed;
@@ -40,11 +40,13 @@ export async function GET(req: NextRequest) {
         orderBy: { createdAt: "desc" },
       });
     } catch (err) {
-      console.warn("prisma.payment lookup failed — check model name and migration", err);
+      console.warn(
+        "prisma.payment lookup failed — check model name and migration",
+        err
+      );
       lastPayment = null;
     }
 
-    
     const dbSubscriptionId =
       (lastPayment as any)?.subscriptionId ||
       (lastPayment as any)?.subscription_id ||
@@ -59,22 +61,22 @@ export async function GET(req: NextRequest) {
       (user as any).stripe_customer_id ||
       null;
 
-    
     let subscription: SubscriptionShape | null = null;
 
     // If we have a db subscription id and stripe configured, try to retrieve that subscription directly
     if (stripe && dbSubscriptionId) {
       try {
         // retrieve subscription from stripe
-        const stripeSub = await stripe.subscriptions.retrieve(dbSubscriptionId as string, {
-          expand: ["items.data.price"],
-        });
+        const stripeSub = await stripe.subscriptions.retrieve(
+          dbSubscriptionId as string,
+          {
+            expand: ["items.data.price"],
+          }
+        );
         const anySub = stripeSub as any;
-
 
         const status = anySub.status ?? null;
         const subscribedFlag = status === "active" || status === "trialing";
-
 
         const price = anySub.items?.data?.[0]?.price;
 
@@ -85,15 +87,17 @@ export async function GET(req: NextRequest) {
               ? anySub.current_period_end
               : anySub.current_period_end ?? null,
           trial_end: anySub.trial_end ?? null,
-          plan_name: subscribedFlag
-            ? (price?.nickname || "PRO")
-            : "Free",
+          plan_name: subscribedFlag ? price?.nickname || "PRO" : "Free",
         };
 
         // mark subscribed if subscription is active or trialing
         isSubscribed = subscribedFlag;
       } catch (err) {
-        console.warn("stripe.subscriptions.retrieve failed for dbSubscriptionId", dbSubscriptionId, err);
+        console.warn(
+          "stripe.subscriptions.retrieve failed for dbSubscriptionId",
+          dbSubscriptionId,
+          err
+        );
         subscription = null;
       }
     }
@@ -109,7 +113,11 @@ export async function GET(req: NextRequest) {
         });
 
         const pick =
-          subs.data.find((s) => s.status === "active" || s.status === "trialing") || subs.data[0] || null;
+          subs.data.find(
+            (s) => s.status === "active" || s.status === "trialing"
+          ) ||
+          subs.data[0] ||
+          null;
 
         if (pick) {
           const anyPick = pick as any;
@@ -124,22 +132,22 @@ export async function GET(req: NextRequest) {
                 ? anyPick.current_period_end
                 : anyPick.current_period_end ?? null,
             trial_end: anyPick.trial_end ?? null,
-            plan_name: subscribedFlag
-              ? (price?.nickname || "PRO")
-              : "Free",
+            plan_name: subscribedFlag ? price?.nickname || "PRO" : "Free",
           };
 
           isSubscribed = subscribedFlag;
         }
       } catch (err) {
-        console.warn("stripe.subscriptions.list failed for customer", dbCustomerId, err);
+        console.warn(
+          "stripe.subscriptions.list failed for customer",
+          dbCustomerId,
+          err
+        );
       }
     }
 
-
     if (!subscription) {
       if ((user as any).subscription) {
-        
         const stored = (user as any).subscription as SubscriptionShape;
         const status = stored?.status ?? null;
         const subscribedFlag = status === "active" || status === "trialing";
@@ -148,14 +156,23 @@ export async function GET(req: NextRequest) {
           status: status,
           current_period_end: stored?.current_period_end ?? null,
           trial_end: stored?.trial_end ?? null,
-          plan_name: subscribedFlag ? (stored?.plan_name || "PRO") : "Free",
+          plan_name: subscribedFlag ? stored?.plan_name || "PRO" : "Free",
         };
         isSubscribed = subscribedFlag || !!(user as any).isSubscribed;
       } else {
-
         subscription = (user as any).isSubscribed
-          ? { status: "active", current_period_end: null, trial_end: null, plan_name: "PRO" }
-          : { status: "none", current_period_end: null, trial_end: null, plan_name: "Free" };
+          ? {
+              status: "active",
+              current_period_end: null,
+              trial_end: null,
+              plan_name: "PRO",
+            }
+          : {
+              status: "none",
+              current_period_end: null,
+              trial_end: null,
+              plan_name: "Free",
+            };
         isSubscribed = !!(user as any).isSubscribed;
       }
     }
@@ -172,7 +189,7 @@ export async function GET(req: NextRequest) {
       username: user.username,
       email: user.email,
       subscription,
-      
+
       _debug: {
         dbSubscriptionId,
         dbCustomerId,
@@ -181,6 +198,9 @@ export async function GET(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error checking usage:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

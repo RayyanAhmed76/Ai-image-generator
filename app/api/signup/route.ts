@@ -15,13 +15,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
+      );
     }
 
-    
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [{ email }, { username }],
@@ -35,10 +36,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
     const user = await prisma.user.create({
       data: {
         email,
@@ -47,12 +46,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    
     const token = randomBytes(32).toString("hex");
     const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7); 
+    expiresAt.setDate(expiresAt.getDate() + 7);
 
-    
     await prisma.token.create({
       data: {
         token,
@@ -61,28 +58,27 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const res = NextResponse.json({ success: true, user: { id: user.id, email: user.email, username: user.username } });
-    
-    
+    const res = NextResponse.json({
+      success: true,
+      user: { id: user.id, email: user.email, username: user.username },
+    });
+
     res.cookies.set({
       name: "flux_auth",
       value: token,
       httpOnly: true,
       path: "/",
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 7, 
+      secure: false,
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return res;
   } catch (err) {
     console.error("Signup error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
-
-
-
-
-
-
