@@ -147,7 +147,7 @@ async function POST(req) {
             httpOnly: true,
             path: "/",
             sameSite: "lax",
-            secure: ("TURBOPACK compile-time value", "development") === "production",
+            secure: false,
             maxAge: 60 * 60 * 24 * 7
         });
         return res;
