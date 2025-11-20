@@ -41,24 +41,25 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 ;
+const FREE_TRIES_LIMIT = 2;
 function Nav() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
-    const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false); // avatar dropdown
-    const [mobileOpen, setMobileOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false); // mobile sidebar state
+    const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [mobileOpen, setMobileOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const dropdownRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [username, setUsername] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("User");
     const [userInitial, setUserInitial] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("U");
-    // subscription state
     const [subscription, setSubscription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isSubscribed, setIsSubscribed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [usageCount, setUsageCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const [subLoading, setSubLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
-    const mobileNavWidthRem = 11; //used in css for rem
+    const mobileNavWidthRem = 11;
     function toDate(value) {
         if (!value) return null;
         if (typeof value === "number") {
             return value > 1e12 ? new Date(value) : new Date(value * 1000);
         }
-        // string: try ISO
         const d = new Date(value);
         return isNaN(d.getTime()) ? null : d;
     }
@@ -69,7 +70,7 @@ function Nav() {
         const ms = d.getTime() - now.getTime();
         return Math.ceil(ms / (1000 * 60 * 60 * 24));
     }
-    // Fetch user & subscription info on mount
+    // Fetch user & subscription info
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const fetchUserInfo = async ()=>{
             try {
@@ -79,28 +80,14 @@ function Nav() {
                     setUsername(data.username);
                     setUserInitial(data.username.charAt(0).toUpperCase());
                 }
-                // Try to read subscription info from this endpoint if provided
-                if (data?.subscription) {
-                    setSubscription(data.subscription);
-                    setSubLoading(false);
-                    return;
-                }
-                // fallback: hit a dedicated subscription endpoint
-                try {
-                    const res2 = await fetch("/api/subscription-status");
-                    if (res2.ok) {
-                        const sdata = await res2.json();
-                        setSubscription(sdata || null);
-                    } else {
-                        setSubscription(null);
-                    }
-                } catch (err) {
-                    console.warn("subscription-status fetch failed", err);
-                    setSubscription(null);
-                }
+                setSubscription(data.subscription || null);
+                setIsSubscribed(!!data.isSubscribed);
+                setUsageCount(data.usageCount ?? 0);
             } catch (err) {
                 console.error("Error fetching user info:", err);
                 setSubscription(null);
+                setIsSubscribed(false);
+                setUsageCount(0);
             } finally{
                 setSubLoading(false);
             }
@@ -123,7 +110,7 @@ function Nav() {
     }, [
         pathname
     ]);
-    // Add/remove a class on body and inject CSS to center content while mobile nav is open
+    // Mobile nav styling
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const CLASS = "mobile-nav-open";
         const STYLE_ID = "mobile-nav-open-style";
@@ -132,14 +119,11 @@ function Nav() {
             const style = document.createElement("style");
             style.id = STYLE_ID;
             style.innerHTML = `
-        /* Centers the main app content when mobile nav is open.
-           Adjust the selector (#__next > *) if your app structure differs. */
         body.${CLASS} #__next > * {
           margin-left: auto !important;
           margin-right: auto !important;
-          max-width: calc(100% - ${mobileNavWidthRem}rem) !important; /* account for nav width + gap */
+          max-width: calc(100% - ${mobileNavWidthRem}rem) !important;
         }
-
         @media (max-width: 420px) {
           body.${CLASS} #__next > * {
             max-width: calc(100% - ${mobileNavWidthRem - 0.5}rem) !important;
@@ -154,9 +138,7 @@ function Nav() {
         } else {
             document.body.classList.remove(CLASS);
         }
-        return ()=>{
-            document.body.classList.remove(CLASS);
-        };
+        return ()=>document.body.classList.remove(CLASS);
     }, [
         mobileOpen
     ]);
@@ -171,7 +153,7 @@ function Nav() {
                 }
             }));
             setTimeout(()=>router.push("/login"), 600);
-        } catch (err) {
+        } catch  {
             window.dispatchEvent(new CustomEvent("app:notify", {
                 detail: {
                     message: "Logout failed"
@@ -179,11 +161,9 @@ function Nav() {
             }));
         }
     };
-    // mobile closed transform: slide out to the right. On sm+ we always show (sm:translate-x-0)
     const mobileClosedTransform = mobileOpen ? "translate-x-0" : "translate-x-full";
-    // border: default (mobile) use left border because nav sits on right; on sm+ (desktop) use right border (nav on left)
     const borderResponsive = "border-l border-purple-700/50 sm:border-r sm:border-l-0";
-    // helpers for rendering subscription UI
+    // Render subscription / free prompt row
     const renderSubscriptionRow = ()=>{
         if (subLoading) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -191,32 +171,39 @@ function Nav() {
                 children: "Loading subscription…"
             }, void 0, false, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 172,
+                lineNumber: 154,
                 columnNumber: 9
             }, this);
         }
         const s = subscription || {
-            status: "none"
+            status: "none",
+            plan_name: "Free"
         };
-        if (s.status === "trialing" || s.status === "trial") {
-            const days = daysLeft(s.trial_end);
+        const freeLeft = Math.max(FREE_TRIES_LIMIT - usageCount, 0);
+        // Free prompts
+        if (!isSubscribed && freeLeft > 0) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex flex-col gap-2",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-sm font-medium text-purple-100",
-                        children: "Free trial"
+                        children: "Free usage"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 182,
+                        lineNumber: 167,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-xs text-purple-200",
-                        children: days === null ? "Trial active" : days > 0 ? `${days} day${days > 1 ? "s" : ""} left` : "Trial ending soon"
-                    }, void 0, false, {
+                        children: [
+                            freeLeft,
+                            " free prompt",
+                            freeLeft > 1 ? "s" : "",
+                            " left"
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 183,
+                        lineNumber: 168,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -228,22 +215,23 @@ function Nav() {
                             children: "Upgrade"
                         }, void 0, false, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 192,
+                            lineNumber: 172,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 191,
+                        lineNumber: 171,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 181,
+                lineNumber: 166,
                 columnNumber: 9
             }, this);
         }
-        if (s.status === "active" || s.status === "paid" || s.status === "subscribed") {
+        // Subscribed
+        if (isSubscribed) {
             const nextDate = toDate(s.current_period_end);
             const formatted = nextDate ? new Intl.DateTimeFormat(undefined, {
                 month: "short",
@@ -258,45 +246,45 @@ function Nav() {
                         children: "Subscribed"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 212,
+                        lineNumber: 197,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-xs text-purple-200",
                         children: [
-                            "Next billing: ",
-                            formatted
+                            "Plan: ",
+                            s.plan_name
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 213,
+                        lineNumber: 198,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "pt-2",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>router.push("/account"),
-                            className: "block w-full cursor-pointer text-center px-2 py-1 rounded-md border hover:bg-purple-500 border-purple-600 text-purple-100 text-sm font-medium",
+                            className: "block w-full text-center px-2 py-1 cursor-pointer rounded-md border hover:bg-purple-500 border-purple-600 text-purple-100 text-sm font-medium",
                             type: "button",
                             children: "Manage"
                         }, void 0, false, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 216,
+                            lineNumber: 200,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 215,
+                        lineNumber: 199,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 211,
+                lineNumber: 196,
                 columnNumber: 9
             }, this);
         }
-        // canceled or none
+        // Not subscribed and no free prompts
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex flex-col gap-2",
             children: [
@@ -305,38 +293,38 @@ function Nav() {
                     children: "Not subscribed"
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 231,
+                    lineNumber: 215,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-xs text-purple-200",
-                    children: "Start a 7-day trial or subscribe for full access."
+                    children: "Start your subscription for unlimited prompts."
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 232,
+                    lineNumber: 218,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "pt-2",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>router.push("/account"),
+                        onClick: ()=>router.push("/subscribe"),
                         className: "block w-full text-center px-2 py-1 rounded-md bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-sm font-medium",
                         type: "button",
                         children: "Subscribe"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 235,
+                        lineNumber: 222,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 234,
+                    lineNumber: 221,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/Nav.tsx",
-            lineNumber: 230,
+            lineNumber: 214,
             columnNumber: 7
         }, this);
     };
@@ -346,7 +334,7 @@ function Nav() {
                 "aria-label": mobileOpen ? "Close navigation" : "Open navigation",
                 onClick: ()=>setMobileOpen((s)=>!s),
                 className: `${mobileOpen ? "" : "sm:hidden fixed top-4 right-4 z-50 bg-purple-800/90 text-white p-2 rounded-md shadow-lg focus:outline-none"}`,
-                children: mobileOpen ? "" : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                children: !mobileOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                     xmlns: "http://www.w3.org/2000/svg",
                     className: "h-5 w-5",
                     viewBox: "0 0 24 24",
@@ -359,17 +347,17 @@ function Nav() {
                         d: "M4 6h16M4 12h16M4 18h16"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 256,
-                        columnNumber: 125
+                        lineNumber: 254,
+                        columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 256,
+                    lineNumber: 247,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 250,
+                lineNumber: 237,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -378,7 +366,7 @@ function Nav() {
                 className: `sm:hidden fixed inset-0 bg-black/40 z-30 transition-opacity ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`
             }, void 0, false, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 261,
+                lineNumber: 265,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -399,26 +387,19 @@ function Nav() {
                             className: "flex items-center gap-3 w-full",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1.5 sm:p-2 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow",
+                                    className: "w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1.5 sm:p-2 flex items-center justify-center bg-zinc-300 shadow-lg hover:shadow-xl transition-shadow",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: "/logo.png",
+                                        src: "/images/logo.png",
                                         alt: "Logo",
-                                        className: "w-full h-full object-contain",
-                                        onError: (e)=>{
-                                            const target = e.target;
-                                            target.style.display = "none";
-                                            if (target.parentElement) {
-                                                target.parentElement.innerHTML = '<div class="w-full h-full rounded-xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm sm:text-xl">AI</div>';
-                                            }
-                                        }
+                                        className: "w-full h-full object-contain rounded-md"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 284,
+                                        lineNumber: 289,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 283,
+                                    lineNumber: 288,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -426,18 +407,18 @@ function Nav() {
                                     children: "Bunyad"
                                 }, void 0, false, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 299,
+                                    lineNumber: 295,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 282,
+                            lineNumber: 287,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 281,
+                        lineNumber: 286,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -445,9 +426,7 @@ function Nav() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/",
-                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full
-              ${pathname === "/" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"}
-              ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
+                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full ${pathname === "/" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"} ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
                                 title: "Dashboard",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -462,12 +441,12 @@ function Nav() {
                                             d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 315,
+                                            lineNumber: 322,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 314,
+                                        lineNumber: 316,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -475,7 +454,7 @@ function Nav() {
                                         children: "Dashboard"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 317,
+                                        lineNumber: 329,
                                         columnNumber: 13
                                     }, this)
                                 ]
@@ -486,9 +465,7 @@ function Nav() {
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>router.push("/subscribe"),
-                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full
-              ${pathname === "/subscribe" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"}
-              ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
+                                className: `flex items-center gap-3 p-2 cursor-pointer rounded-lg transition-all w-full ${pathname === "/subscribe" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"} ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
                                 title: "Plans",
                                 type: "button",
                                 children: [
@@ -504,12 +481,12 @@ function Nav() {
                                             d: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 330,
+                                            lineNumber: 353,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 329,
+                                        lineNumber: 347,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -517,54 +494,13 @@ function Nav() {
                                         children: "Plans"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 332,
+                                        lineNumber: 360,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/Nav.tsx",
-                                lineNumber: 321,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/about",
-                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full
-              ${pathname === "/about" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"}
-              ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
-                                title: "Homepage",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                        className: "w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0",
-                                        fill: "none",
-                                        viewBox: "0 0 24 24",
-                                        stroke: "currentColor",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                            strokeLinecap: "round",
-                                            strokeLinejoin: "round",
-                                            strokeWidth: 2,
-                                            d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 343,
-                                            columnNumber: 15
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 342,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: `${mobileOpen ? "inline-block" : "hidden"} sm:hidden text-sm font-medium`,
-                                        children: "Homepage"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 345,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/Nav.tsx",
-                                lineNumber: 335,
+                                lineNumber: 337,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -583,9 +519,7 @@ function Nav() {
                                     onClick: ()=>setOpen((s)=>!s),
                                     "aria-haspopup": "true",
                                     "aria-expanded": open,
-                                    className: `w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer
-                text-purple-200 hover:bg-purple-700/30 hover:text-white
-                ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
+                                    className: `w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-purple-200 hover:bg-purple-700/30 hover:text-white ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
                                     title: username,
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -593,7 +527,7 @@ function Nav() {
                                             children: userInitial
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 361,
+                                            lineNumber: 382,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -601,13 +535,13 @@ function Nav() {
                                             children: username
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 364,
+                                            lineNumber: 385,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 352,
+                                    lineNumber: 373,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -620,7 +554,7 @@ function Nav() {
                                                 children: username
                                             }, void 0, false, {
                                                 fileName: "[project]/components/Nav.tsx",
-                                                lineNumber: 370,
+                                                lineNumber: 400,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -628,7 +562,7 @@ function Nav() {
                                                 children: renderSubscriptionRow()
                                             }, void 0, false, {
                                                 fileName: "[project]/components/Nav.tsx",
-                                                lineNumber: 374,
+                                                lineNumber: 403,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -642,53 +576,53 @@ function Nav() {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/Nav.tsx",
-                                                            lineNumber: 384,
+                                                            lineNumber: 410,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: "Logout"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/Nav.tsx",
-                                                            lineNumber: 385,
+                                                            lineNumber: 411,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/Nav.tsx",
-                                                    lineNumber: 379,
+                                                    lineNumber: 405,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/Nav.tsx",
-                                                lineNumber: 378,
+                                                lineNumber: 404,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 369,
+                                        lineNumber: 399,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 368,
+                                    lineNumber: 394,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 351,
+                            lineNumber: 372,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 350,
+                        lineNumber: 371,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 271,
+                lineNumber: 276,
                 columnNumber: 7
             }, this)
         ]
@@ -723,34 +657,14 @@ function Page() {
     const [isDragging, setIsDragging] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const confettiRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     const pollIntervalRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const checkUsage = async ()=>{
-            try {
-                const res = await fetch("/api/check-usage");
-                const data = await res.json();
-                if (data.limitReached && !data.isSubscribed) {
-                    router.replace("/subscribe");
-                }
-            } catch (err) {
-                console.error("Error checking usage:", err);
-            }
-        };
-        checkUsage();
-    }, [
-        router
-    ]);
-    // Cleanup polling interval on unmount
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        return ()=>{
-            if (pollIntervalRef.current) {
-                clearInterval(pollIntervalRef.current);
-                pollIntervalRef.current = null;
-            }
-        };
-    }, []);
-    // toast
+    // ----------------- TOAST -----------------
     const [toastMsg, setToastMsg] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const toastTimerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const showToast = (text, ms = 3000)=>{
+        setToastMsg(text);
+        if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+        toastTimerRef.current = window.setTimeout(()=>setToastMsg(null), ms);
+    };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const handler = (e)=>{
             const detail = e?.detail;
@@ -759,12 +673,270 @@ function Page() {
         window.addEventListener("app:notify", handler);
         return ()=>window.removeEventListener("app:notify", handler);
     }, []);
-    const showToast = (text, ms = 3000)=>{
-        setToastMsg(text);
-        if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
-        toastTimerRef.current = window.setTimeout(()=>setToastMsg(null), ms);
+    // ----------------- USAGE CHECK -----------------
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const checkUsage = async ()=>{
+            try {
+                const res = await fetch("/api/check-usage");
+                const data = await res.json();
+                if (data.limitReached && !data.isSubscribed) router.replace("/subscribe");
+            } catch (err) {
+                console.error("Error checking usage:", err);
+            }
+        };
+        checkUsage();
+    }, [
+        router
+    ]);
+    // ----------------- POLLING -----------------
+    const clearPolling = ()=>{
+        if (pollIntervalRef.current) {
+            clearInterval(pollIntervalRef.current);
+            pollIntervalRef.current = null;
+        }
     };
-    // confetti (same simple impl)
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        return ()=>clearPolling();
+    }, []);
+    const startPolling = (pollingUrl)=>{
+        clearPolling();
+        let pollAttempts = 0;
+        const maxAttempts = 60;
+        const intervalMs = 2000;
+        const doPoll = async ()=>{
+            pollAttempts++;
+            try {
+                const pollRes = await fetch("/api/fetch_result", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        pollingUrl
+                    })
+                });
+                const pollData = await pollRes.json().catch(()=>null);
+                if (!pollData) {
+                    if (pollAttempts >= maxAttempts) {
+                        clearPolling();
+                        setShowLoader(false);
+                        setLoading(false);
+                        showToast("Generation timeout. Please try again.");
+                    }
+                    return;
+                }
+                if (pollData?.imageUrl) {
+                    clearPolling();
+                    setResultUrl(pollData.imageUrl);
+                    setShowLoader(false);
+                    setLoading(false);
+                    showToast("Generated!");
+                    return;
+                }
+                if (pollData?.ready === true) {
+                    clearPolling();
+                    setShowLoader(false);
+                    setLoading(false);
+                    showToast("Job completed but no image returned. Try again or contact support.");
+                    return;
+                }
+                if (pollAttempts >= maxAttempts) {
+                    clearPolling();
+                    setShowLoader(false);
+                    setLoading(false);
+                    showToast("Generation timeout. Please try again.");
+                }
+            } catch (err) {
+                console.error("Polling error:", err);
+                if (pollAttempts >= maxAttempts) {
+                    clearPolling();
+                    setShowLoader(false);
+                    setLoading(false);
+                    showToast("Error fetching result. Please try again.");
+                }
+            }
+        };
+        doPoll();
+        pollIntervalRef.current = setInterval(doPoll, intervalMs);
+    };
+    // ----------------- IMAGE COMPRESSION -----------------
+    const compressImage = (file, maxWidth, maxHeight, quality)=>{
+        return new Promise((resolve, reject)=>{
+            const img = new Image();
+            img.onload = ()=>{
+                let { width, height } = img;
+                const aspectRatio = width / height;
+                if (width > maxWidth) {
+                    width = maxWidth;
+                    height = width / aspectRatio;
+                }
+                if (height > maxHeight) {
+                    height = maxHeight;
+                    width = height * aspectRatio;
+                }
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext("2d");
+                if (!ctx) return reject("Cannot get canvas context");
+                ctx.drawImage(img, 0, 0, width, height);
+                canvas.toBlob((blob)=>{
+                    if (!blob) return reject("Compression failed");
+                    resolve(new File([
+                        blob
+                    ], file.name, {
+                        type: file.type
+                    }));
+                }, file.type, quality);
+            };
+            img.onerror = reject;
+            img.src = URL.createObjectURL(file);
+        });
+    };
+    // ----------------- FILE SELECT -----------------
+    const handleFileSelect = async (file)=>{
+        if (!file) return;
+        const MAX_SIZE_MB = 20;
+        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+        const maxDim = isMobile ? 800 : 1024;
+        const quality = isMobile ? 0.7 : 0.8;
+        try {
+            let processedFile = file;
+            if (file.size / 1024 / 1024 > 5) processedFile = await compressImage(file, maxDim, maxDim, quality);
+            if (processedFile.size / 1024 / 1024 > MAX_SIZE_MB) {
+                showToast("Image too large even after compression (max 20MB).");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = ()=>{
+                const r = reader.result;
+                if (!r) return showToast("Failed to read file");
+                setImagePreview(r);
+                const comma = r.indexOf(",");
+                const plain = comma >= 0 ? r.slice(comma + 1) : r;
+                setBase64Image(plain);
+                showToast("Image ready → now enter a prompt");
+            };
+            reader.readAsDataURL(processedFile);
+        } catch (err) {
+            console.error("Error processing image:", err);
+            showToast("Failed to process image");
+        }
+    };
+    const onDrop = (e)=>{
+        e.preventDefault();
+        handleFileSelect(e.dataTransfer?.files?.[0] ?? null);
+    };
+    const onDragOver = (e)=>e.preventDefault();
+    // ----------------- GENERATE -----------------
+    const handleGenerate = async ()=>{
+        if (!base64Image) return showToast("Upload an image first");
+        if (!prompt.trim()) return showToast("Enter a prompt");
+        clearPolling();
+        setShowLoader(true);
+        setLoading(true);
+        try {
+            const res = await fetch("/api/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    prompt,
+                    base64Image
+                })
+            });
+            const json = await res.json().catch(()=>null);
+            if (res.status === 403 && json?.limitReached) {
+                setShowLoader(false);
+                setLoading(false);
+                showToast("Free trial limit reached. Redirecting to subscription...");
+                setTimeout(()=>window.location.href = "/subscribe", 2000);
+                return;
+            }
+            if (res.status === 401) {
+                setShowLoader(false);
+                setLoading(false);
+                showToast("Please log in to continue");
+                setTimeout(()=>window.location.href = "/login", 2000);
+                return;
+            }
+            if (!json) {
+                setShowLoader(false);
+                setLoading(false);
+                showToast("Unexpected response from server. Try again.");
+                return;
+            }
+            if (json?.image) {
+                setResultUrl(json.image);
+                setShowLoader(false);
+                setLoading(false);
+                showToast("Generated!");
+                return;
+            }
+            if (json?.polling_url) {
+                showToast("Submitted => now processing...");
+                startPolling(json.polling_url);
+                return;
+            }
+            if (json?.error) {
+                setShowLoader(false);
+                setLoading(false);
+                showToast(json.error);
+                return;
+            }
+            setShowLoader(false);
+            setLoading(false);
+            showToast("Unexpected response. Please try again.");
+        } catch (err) {
+            console.error("Network / generate error:", err);
+            setShowLoader(false);
+            setLoading(false);
+            showToast("Network error");
+        }
+    };
+    // ----------------- DOWNLOAD -----------------
+    const handleDownload = async ()=>{
+        if (!resultUrl) return;
+        try {
+            let blob;
+            if (resultUrl.startsWith("data:")) {
+                const response = await fetch(resultUrl);
+                blob = await response.blob();
+            } else {
+                showToast("Preparing download...");
+                const response = await fetch("/api/fetch-image", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        imageUrl: resultUrl
+                    })
+                });
+                const data = await response.json();
+                if (!response.ok || data.error) {
+                    showToast(data.error || "Failed to prepare download");
+                    return;
+                }
+                const blobResponse = await fetch(data.dataUrl);
+                blob = await blobResponse.blob();
+            }
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `generated-image-${Date.now()}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            showToast("Image downloaded!");
+        } catch (err) {
+            console.error("Error downloading image:", err);
+            showToast("Failed to download image");
+        }
+    };
+    // ----------------- CONFETTI -----------------
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!resultUrl) return;
         const container = confettiRef.current;
@@ -796,182 +968,7 @@ function Page() {
     }, [
         resultUrl
     ]);
-    // file select
-    const handleFileSelect = (file)=>{
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onloadend = ()=>{
-            const r = reader.result;
-            if (!r) {
-                showToast("Failed to read file");
-                return;
-            }
-            setImagePreview(r);
-            const comma = r.indexOf(",");
-            const plain = comma >= 0 ? r.slice(comma + 1) : r;
-            setBase64Image(plain);
-            showToast("Image ready -> now enter a prompt");
-        };
-        reader.readAsDataURL(file);
-    };
-    const onDrop = (e)=>{
-        e.preventDefault();
-        handleFileSelect(e.dataTransfer?.files?.[0] ?? null);
-    };
-    const onDragOver = (e)=>e.preventDefault();
-    const handleGenerate = async ()=>{
-        if (!base64Image) return showToast("Upload an image first");
-        if (!prompt.trim()) return showToast("Enter a prompt");
-        setShowLoader(true);
-        setLoading(true);
-        try {
-            const res = await fetch("/api/generate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    prompt,
-                    base64Image
-                })
-            });
-            const json = await res.json();
-            if (res.status === 403 && json?.limitReached) {
-                showToast("Free trial limit reached. Redirecting to subscription...");
-                setTimeout(()=>{
-                    window.location.href = "/subscribe";
-                }, 2000);
-                return;
-            }
-            if (res.status === 401) {
-                showToast("Please log in to continue");
-                setTimeout(()=>{
-                    window.location.href = "/login";
-                }, 2000);
-                return;
-            }
-            if (json?.image) {
-                setResultUrl(json.image);
-                setShowLoader(false);
-                showToast("Generated!");
-                return;
-            }
-            if (json?.polling_url) {
-                // Start polling for async results
-                showToast("Submitted —> now processing...");
-                const pollingUrl = json.polling_url;
-                let pollAttempts = 0;
-                const maxAttempts = 60; // 5 minutes max (5s intervals)
-                // Clear any existing polling interval
-                if (pollIntervalRef.current) {
-                    clearInterval(pollIntervalRef.current);
-                }
-                pollIntervalRef.current = setInterval(async ()=>{
-                    pollAttempts++;
-                    try {
-                        const pollRes = await fetch("/api/fetch_result", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                pollingUrl
-                            })
-                        });
-                        const pollData = await pollRes.json();
-                        if (pollData?.imageUrl) {
-                            if (pollIntervalRef.current) {
-                                clearInterval(pollIntervalRef.current);
-                                pollIntervalRef.current = null;
-                            }
-                            setResultUrl(pollData.imageUrl);
-                            setShowLoader(false);
-                            setLoading(false);
-                            showToast("Generated!");
-                        } else if (pollAttempts >= maxAttempts) {
-                            if (pollIntervalRef.current) {
-                                clearInterval(pollIntervalRef.current);
-                                pollIntervalRef.current = null;
-                            }
-                            setShowLoader(false);
-                            setLoading(false);
-                            showToast("Generation timeout. Please try again.");
-                        }
-                    // If ready: false, continue polling
-                    } catch (pollErr) {
-                        console.error("Polling error:", pollErr);
-                        if (pollAttempts >= maxAttempts) {
-                            if (pollIntervalRef.current) {
-                                clearInterval(pollIntervalRef.current);
-                                pollIntervalRef.current = null;
-                            }
-                            setShowLoader(false);
-                            setLoading(false);
-                            showToast("Error fetching result. Please try again.");
-                        }
-                    }
-                }, 5000); // Poll every 5 seconds
-                return;
-            }
-            if (json?.error) {
-                setShowLoader(false);
-                showToast(json.error);
-            }
-        } catch (err) {
-            setShowLoader(false);
-            showToast("Network error");
-        } finally{
-            setLoading(false);
-        }
-    };
-    const handleDownload = async ()=>{
-        if (!resultUrl) return;
-        try {
-            let blob;
-            // Check if it's a data URL
-            if (resultUrl.startsWith("data:")) {
-                // Convert data URL to blob
-                const response = await fetch(resultUrl);
-                blob = await response.blob();
-            } else {
-                // Use backend API to fetch image (avoids CORS issues)
-                showToast("Preparing download...");
-                const response = await fetch("/api/fetch-image", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        imageUrl: resultUrl
-                    })
-                });
-                const data = await response.json();
-                if (!response.ok || data.error) {
-                    showToast(data.error || "Failed to prepare download");
-                    return;
-                }
-                // Convert data URL to blob
-                const blobResponse = await fetch(data.dataUrl);
-                blob = await blobResponse.blob();
-            }
-            // Create a temporary URL for the blob
-            const url = window.URL.createObjectURL(blob);
-            // Create a temporary anchor element and trigger download
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `generated-image-${Date.now()}.png`;
-            document.body.appendChild(link);
-            link.click();
-            // Cleanup
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-            showToast("Image downloaded!");
-        } catch (err) {
-            console.error("Error downloading image:", err);
-            showToast("Failed to download image");
-        }
-    };
-    // Slider handlers for before/after comparison
+    // ----------------- SLIDER -----------------
     const handleSliderStart = (e)=>{
         e.preventDefault();
         setIsDragging(true);
@@ -987,9 +984,7 @@ function Page() {
             const percentage = Math.max(0, Math.min(100, x / rect.width * 100));
             setSliderPosition(percentage);
         };
-        const handleMouseUp = ()=>{
-            setIsDragging(false);
-        };
+        const handleMouseUp = ()=>setIsDragging(false);
         document.addEventListener("mousemove", handleMouseMove);
         document.addEventListener("mouseup", handleMouseUp);
         return ()=>{
@@ -1004,17 +999,13 @@ function Page() {
     const handleUseGeneratedImage = async ()=>{
         if (!resultUrl) return;
         try {
-            // Check if resultUrl is already a data URL
             if (resultUrl.startsWith("data:")) {
-                // Extract base64 part from data URL
                 const commaIndex = resultUrl.indexOf(",");
                 const base64Data = commaIndex >= 0 ? resultUrl.slice(commaIndex + 1) : resultUrl;
-                // Set the full data URL as preview
                 setImagePreview(resultUrl);
                 setBase64Image(base64Data);
                 showToast("Image loaded! Enter a new prompt to modify it.");
             } else {
-                // Use backend API to fetch image (avoids CORS issues)
                 showToast("Loading image...");
                 const response = await fetch("/api/fetch-image", {
                     method: "POST",
@@ -1030,7 +1021,6 @@ function Page() {
                     showToast(data.error || "Failed to load image");
                     return;
                 }
-                // Set the image preview and base64 data
                 setImagePreview(data.dataUrl);
                 setBase64Image(data.base64);
                 showToast("Image loaded! Enter a new prompt to modify it.");
@@ -1040,12 +1030,13 @@ function Page() {
             showToast("Failed to load image");
         }
     };
+    // ----------------- RETURN JSX -----------------
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Nav$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 357,
+                lineNumber: 422,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1056,7 +1047,7 @@ function Page() {
                         className: "pointer-events-none fixed inset-0 z-50"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 360,
+                        lineNumber: 424,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1071,22 +1062,22 @@ function Page() {
                                     children: toastMsg
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
-                                    lineNumber: 367,
+                                    lineNumber: 437,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 366,
+                                lineNumber: 436,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/app/page.tsx",
-                            lineNumber: 364,
+                            lineNumber: 434,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 363,
+                        lineNumber: 430,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
@@ -1097,7 +1088,7 @@ function Page() {
                                 children: "Imagine your Bunyad"
                             }, void 0, false, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 374,
+                                lineNumber: 444,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1108,7 +1099,7 @@ function Page() {
                                         children: "Upload"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 378,
+                                        lineNumber: 448,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1116,7 +1107,7 @@ function Page() {
                                         children: "→"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 379,
+                                        lineNumber: 449,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1124,7 +1115,7 @@ function Page() {
                                         children: "Prompt"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 380,
+                                        lineNumber: 450,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1132,7 +1123,7 @@ function Page() {
                                         children: "→"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 381,
+                                        lineNumber: 451,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1140,19 +1131,19 @@ function Page() {
                                         children: "Generate"
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 382,
+                                        lineNumber: 452,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 377,
+                                lineNumber: 447,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 373,
+                        lineNumber: 443,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -1182,7 +1173,7 @@ function Page() {
                                                         className: "w-full h-full object-cover rounded-xl"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 401,
+                                                        lineNumber: 478,
                                                         columnNumber: 21
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "text-center transition-transform duration-200 hover:scale-110",
@@ -1198,7 +1189,7 @@ function Page() {
                                                                         strokeWidth: "2"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 405,
+                                                                        lineNumber: 489,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
@@ -1207,7 +1198,7 @@ function Page() {
                                                                         strokeWidth: "2"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 406,
+                                                                        lineNumber: 494,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("rect", {
@@ -1220,13 +1211,13 @@ function Page() {
                                                                         strokeWidth: "1.5"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 407,
+                                                                        lineNumber: 499,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 404,
+                                                                lineNumber: 484,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1234,18 +1225,18 @@ function Page() {
                                                                 children: "Upload Image"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 409,
+                                                                lineNumber: 509,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 403,
+                                                        lineNumber: 483,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 390,
+                                                    lineNumber: 464,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1256,7 +1247,7 @@ function Page() {
                                                             children: "Prompt"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.tsx",
-                                                            lineNumber: 415,
+                                                            lineNumber: 515,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1266,7 +1257,7 @@ function Page() {
                                                             placeholder: "e.g. Change background to Tokyo at night"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.tsx",
-                                                            lineNumber: 416,
+                                                            lineNumber: 518,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1279,7 +1270,7 @@ function Page() {
                                                                     children: loading ? "Working..." : "Generate"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/page.tsx",
-                                                                    lineNumber: 424,
+                                                                    lineNumber: 526,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1288,35 +1279,36 @@ function Page() {
                                                                         setBase64Image(null);
                                                                         setPrompt("");
                                                                         setResultUrl(null);
+                                                                        clearPolling(); // ensure no polling remains
                                                                     },
                                                                     className: "px-3 sm:px-4 py-2 border border-purple-700/50 rounded-lg hover:bg-purple-800/50 text-purple-200 text-xs sm:text-sm cursor-pointer transition-colors",
                                                                     children: "Clear"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/app/page.tsx",
-                                                                    lineNumber: 432,
+                                                                    lineNumber: 534,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/app/page.tsx",
-                                                            lineNumber: 423,
+                                                            lineNumber: 525,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/app/page.tsx",
-                                                    lineNumber: 414,
+                                                    lineNumber: 514,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 389,
+                                            lineNumber: 463,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 388,
+                                        lineNumber: 458,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1338,7 +1330,7 @@ function Page() {
                                                                 className: "opacity-20"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 452,
+                                                                lineNumber: 558,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
@@ -1347,13 +1339,13 @@ function Page() {
                                                                 strokeWidth: "3"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 453,
+                                                                lineNumber: 566,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 451,
+                                                        lineNumber: 554,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1361,13 +1353,13 @@ function Page() {
                                                         children: "Generating..."
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 455,
+                                                        lineNumber: 572,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 450,
+                                                lineNumber: 553,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1375,7 +1367,7 @@ function Page() {
                                                 children: "Result"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 459,
+                                                lineNumber: 576,
                                                 columnNumber: 15
                                             }, this),
                                             resultUrl ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1398,7 +1390,7 @@ function Page() {
                                                                         alt: "Original"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 468,
+                                                                        lineNumber: 591,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1412,12 +1404,12 @@ function Page() {
                                                                             alt: "Generated"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/page.tsx",
-                                                                            lineNumber: 471,
+                                                                            lineNumber: 605,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 470,
+                                                                        lineNumber: 597,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1442,28 +1434,28 @@ function Page() {
                                                                                     d: "M8 9l4-4 4 4m0 6l-4 4-4-4"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/app/page.tsx",
-                                                                                    lineNumber: 483,
+                                                                                    lineNumber: 626,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/app/page.tsx",
-                                                                                lineNumber: 482,
+                                                                                lineNumber: 620,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/app/page.tsx",
-                                                                            lineNumber: 481,
+                                                                            lineNumber: 619,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/app/page.tsx",
-                                                                        lineNumber: 474,
+                                                                        lineNumber: 612,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 466,
+                                                                lineNumber: 585,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1471,7 +1463,7 @@ function Page() {
                                                                 children: "After"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 489,
+                                                                lineNumber: 637,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1479,13 +1471,13 @@ function Page() {
                                                                 children: "Before"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 490,
+                                                                lineNumber: 640,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 465,
+                                                        lineNumber: 584,
                                                         columnNumber: 21
                                                     }, this),
                                                     !imagePreview && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1496,12 +1488,12 @@ function Page() {
                                                             alt: "Result"
                                                         }, void 0, false, {
                                                             fileName: "[project]/app/page.tsx",
-                                                            lineNumber: 496,
+                                                            lineNumber: 648,
                                                             columnNumber: 23
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 495,
+                                                        lineNumber: 647,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1513,7 +1505,7 @@ function Page() {
                                                                 children: "Open"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 501,
+                                                                lineNumber: 657,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1522,7 +1514,7 @@ function Page() {
                                                                 children: "Download"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 507,
+                                                                lineNumber: 663,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1531,38 +1523,38 @@ function Page() {
                                                                 children: "Use Image"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/app/page.tsx",
-                                                                lineNumber: 513,
+                                                                lineNumber: 669,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 500,
+                                                        lineNumber: 656,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 462,
+                                                lineNumber: 581,
                                                 columnNumber: 17
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-purple-400",
                                                 children: "No result yet"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 522,
+                                                lineNumber: 678,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 448,
+                                        lineNumber: 551,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 387,
+                                lineNumber: 457,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("aside", {
@@ -1576,7 +1568,7 @@ function Page() {
                                                 children: "Quick Tools"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 529,
+                                                lineNumber: 685,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1588,7 +1580,7 @@ function Page() {
                                                         children: "Remove BG"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 531,
+                                                        lineNumber: 689,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1597,7 +1589,7 @@ function Page() {
                                                         children: "Enhance"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 538,
+                                                        lineNumber: 696,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1606,7 +1598,7 @@ function Page() {
                                                         children: "Painting"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 545,
+                                                        lineNumber: 703,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1615,52 +1607,55 @@ function Page() {
                                                         children: "Remove Watermark"
                                                     }, void 0, false, {
                                                         fileName: "[project]/app/page.tsx",
-                                                        lineNumber: 552,
+                                                        lineNumber: 710,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/app/page.tsx",
-                                                lineNumber: 530,
+                                                lineNumber: 688,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 528,
+                                        lineNumber: 684,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "rounded-2xl bg-gray-800/40 backdrop-blur-sm border border-purple-700/30 p-4 sm:p-5 shadow-lg flex items-center justify-center h-[100px] sm:h-[120px]",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             className: "text-xs sm:text-sm text-purple-400 text-center",
-                                            children: " More tools coming soon..."
-                                        }, void 0, false, {
+                                            children: [
+                                                " ",
+                                                "More tools coming soon..."
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/app/page.tsx",
-                                            lineNumber: 562,
+                                            lineNumber: 720,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/page.tsx",
-                                        lineNumber: 561,
+                                        lineNumber: 719,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/page.tsx",
-                                lineNumber: 527,
+                                lineNumber: 683,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 386,
+                        lineNumber: 456,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 359,
+                lineNumber: 423,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("style", {
@@ -1670,13 +1665,13 @@ function Page() {
       `
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 568,
+                lineNumber: 729,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 356,
+        lineNumber: 421,
         columnNumber: 5
     }, this);
 }

@@ -18,25 +18,26 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+const FREE_TRIES_LIMIT = 2;
 function Nav() {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
-    const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // avatar dropdown
-    const [mobileOpen, setMobileOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false); // mobile sidebar state
+    const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [mobileOpen, setMobileOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const dropdownRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [username, setUsername] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("User");
     const [userInitial, setUserInitial] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("U");
-    // subscription state
     const [subscription, setSubscription] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isSubscribed, setIsSubscribed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [usageCount, setUsageCount] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const [subLoading, setSubLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
-    const mobileNavWidthRem = 11; //used in css for rem
+    const mobileNavWidthRem = 11;
     function toDate(value) {
         if (!value) return null;
         if (typeof value === "number") {
             return value > 1e12 ? new Date(value) : new Date(value * 1000);
         }
-        // string: try ISO
         const d = new Date(value);
         return isNaN(d.getTime()) ? null : d;
     }
@@ -47,7 +48,7 @@ function Nav() {
         const ms = d.getTime() - now.getTime();
         return Math.ceil(ms / (1000 * 60 * 60 * 24));
     }
-    // Fetch user & subscription info on mount
+    // Fetch user & subscription info
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Nav.useEffect": ()=>{
             const fetchUserInfo = {
@@ -59,28 +60,14 @@ function Nav() {
                             setUsername(data.username);
                             setUserInitial(data.username.charAt(0).toUpperCase());
                         }
-                        // Try to read subscription info from this endpoint if provided
-                        if (data?.subscription) {
-                            setSubscription(data.subscription);
-                            setSubLoading(false);
-                            return;
-                        }
-                        // fallback: hit a dedicated subscription endpoint
-                        try {
-                            const res2 = await fetch("/api/subscription-status");
-                            if (res2.ok) {
-                                const sdata = await res2.json();
-                                setSubscription(sdata || null);
-                            } else {
-                                setSubscription(null);
-                            }
-                        } catch (err) {
-                            console.warn("subscription-status fetch failed", err);
-                            setSubscription(null);
-                        }
+                        setSubscription(data.subscription || null);
+                        setIsSubscribed(!!data.isSubscribed);
+                        setUsageCount(data.usageCount ?? 0);
                     } catch (err) {
                         console.error("Error fetching user info:", err);
                         setSubscription(null);
+                        setIsSubscribed(false);
+                        setUsageCount(0);
                     } finally{
                         setSubLoading(false);
                     }
@@ -111,7 +98,7 @@ function Nav() {
     }["Nav.useEffect"], [
         pathname
     ]);
-    // Add/remove a class on body and inject CSS to center content while mobile nav is open
+    // Mobile nav styling
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Nav.useEffect": ()=>{
             const CLASS = "mobile-nav-open";
@@ -121,14 +108,11 @@ function Nav() {
                 const style = document.createElement("style");
                 style.id = STYLE_ID;
                 style.innerHTML = `
-        /* Centers the main app content when mobile nav is open.
-           Adjust the selector (#__next > *) if your app structure differs. */
         body.${CLASS} #__next > * {
           margin-left: auto !important;
           margin-right: auto !important;
-          max-width: calc(100% - ${mobileNavWidthRem}rem) !important; /* account for nav width + gap */
+          max-width: calc(100% - ${mobileNavWidthRem}rem) !important;
         }
-
         @media (max-width: 420px) {
           body.${CLASS} #__next > * {
             max-width: calc(100% - ${mobileNavWidthRem - 0.5}rem) !important;
@@ -144,9 +128,7 @@ function Nav() {
                 document.body.classList.remove(CLASS);
             }
             return ({
-                "Nav.useEffect": ()=>{
-                    document.body.classList.remove(CLASS);
-                }
+                "Nav.useEffect": ()=>document.body.classList.remove(CLASS)
             })["Nav.useEffect"];
         }
     }["Nav.useEffect"], [
@@ -163,7 +145,7 @@ function Nav() {
                 }
             }));
             setTimeout(()=>router.push("/login"), 600);
-        } catch (err) {
+        } catch  {
             window.dispatchEvent(new CustomEvent("app:notify", {
                 detail: {
                     message: "Logout failed"
@@ -171,11 +153,9 @@ function Nav() {
             }));
         }
     };
-    // mobile closed transform: slide out to the right. On sm+ we always show (sm:translate-x-0)
     const mobileClosedTransform = mobileOpen ? "translate-x-0" : "translate-x-full";
-    // border: default (mobile) use left border because nav sits on right; on sm+ (desktop) use right border (nav on left)
     const borderResponsive = "border-l border-purple-700/50 sm:border-r sm:border-l-0";
-    // helpers for rendering subscription UI
+    // Render subscription / free prompt row
     const renderSubscriptionRow = ()=>{
         if (subLoading) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -183,32 +163,39 @@ function Nav() {
                 children: "Loading subscription…"
             }, void 0, false, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 172,
+                lineNumber: 154,
                 columnNumber: 9
             }, this);
         }
         const s = subscription || {
-            status: "none"
+            status: "none",
+            plan_name: "Free"
         };
-        if (s.status === "trialing" || s.status === "trial") {
-            const days = daysLeft(s.trial_end);
+        const freeLeft = Math.max(FREE_TRIES_LIMIT - usageCount, 0);
+        // Free prompts
+        if (!isSubscribed && freeLeft > 0) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex flex-col gap-2",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-sm font-medium text-purple-100",
-                        children: "Free trial"
+                        children: "Free usage"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 182,
+                        lineNumber: 167,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-xs text-purple-200",
-                        children: days === null ? "Trial active" : days > 0 ? `${days} day${days > 1 ? "s" : ""} left` : "Trial ending soon"
-                    }, void 0, false, {
+                        children: [
+                            freeLeft,
+                            " free prompt",
+                            freeLeft > 1 ? "s" : "",
+                            " left"
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 183,
+                        lineNumber: 168,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -220,22 +207,23 @@ function Nav() {
                             children: "Upgrade"
                         }, void 0, false, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 192,
+                            lineNumber: 172,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 191,
+                        lineNumber: 171,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 181,
+                lineNumber: 166,
                 columnNumber: 9
             }, this);
         }
-        if (s.status === "active" || s.status === "paid" || s.status === "subscribed") {
+        // Subscribed
+        if (isSubscribed) {
             const nextDate = toDate(s.current_period_end);
             const formatted = nextDate ? new Intl.DateTimeFormat(undefined, {
                 month: "short",
@@ -250,45 +238,45 @@ function Nav() {
                         children: "Subscribed"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 212,
+                        lineNumber: 197,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-xs text-purple-200",
                         children: [
-                            "Next billing: ",
-                            formatted
+                            "Plan: ",
+                            s.plan_name
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 213,
+                        lineNumber: 198,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "pt-2",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             onClick: ()=>router.push("/account"),
-                            className: "block w-full cursor-pointer text-center px-2 py-1 rounded-md border hover:bg-purple-500 border-purple-600 text-purple-100 text-sm font-medium",
+                            className: "block w-full text-center px-2 py-1 cursor-pointer rounded-md border hover:bg-purple-500 border-purple-600 text-purple-100 text-sm font-medium",
                             type: "button",
                             children: "Manage"
                         }, void 0, false, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 216,
+                            lineNumber: 200,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 215,
+                        lineNumber: 199,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 211,
+                lineNumber: 196,
                 columnNumber: 9
             }, this);
         }
-        // canceled or none
+        // Not subscribed and no free prompts
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "flex flex-col gap-2",
             children: [
@@ -297,38 +285,38 @@ function Nav() {
                     children: "Not subscribed"
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 231,
+                    lineNumber: 215,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "text-xs text-purple-200",
-                    children: "Start a 7-day trial or subscribe for full access."
+                    children: "Start your subscription for unlimited prompts."
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 232,
+                    lineNumber: 218,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "pt-2",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        onClick: ()=>router.push("/account"),
+                        onClick: ()=>router.push("/subscribe"),
                         className: "block w-full text-center px-2 py-1 rounded-md bg-gradient-to-r from-sky-500 to-indigo-500 text-white text-sm font-medium",
                         type: "button",
                         children: "Subscribe"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 235,
+                        lineNumber: 222,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 234,
+                    lineNumber: 221,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/Nav.tsx",
-            lineNumber: 230,
+            lineNumber: 214,
             columnNumber: 7
         }, this);
     };
@@ -338,7 +326,7 @@ function Nav() {
                 "aria-label": mobileOpen ? "Close navigation" : "Open navigation",
                 onClick: ()=>setMobileOpen((s)=>!s),
                 className: `${mobileOpen ? "" : "sm:hidden fixed top-4 right-4 z-50 bg-purple-800/90 text-white p-2 rounded-md shadow-lg focus:outline-none"}`,
-                children: mobileOpen ? "" : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                children: !mobileOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
                     xmlns: "http://www.w3.org/2000/svg",
                     className: "h-5 w-5",
                     viewBox: "0 0 24 24",
@@ -351,17 +339,17 @@ function Nav() {
                         d: "M4 6h16M4 12h16M4 18h16"
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 256,
-                        columnNumber: 125
+                        lineNumber: 254,
+                        columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/Nav.tsx",
-                    lineNumber: 256,
+                    lineNumber: 247,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 250,
+                lineNumber: 237,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -370,7 +358,7 @@ function Nav() {
                 className: `sm:hidden fixed inset-0 bg-black/40 z-30 transition-opacity ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`
             }, void 0, false, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 261,
+                lineNumber: 265,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -391,26 +379,19 @@ function Nav() {
                             className: "flex items-center gap-3 w-full",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1.5 sm:p-2 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow",
+                                    className: "w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1.5 sm:p-2 flex items-center justify-center bg-zinc-300 shadow-lg hover:shadow-xl transition-shadow",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: "/logo.png",
+                                        src: "/images/logo.png",
                                         alt: "Logo",
-                                        className: "w-full h-full object-contain",
-                                        onError: (e)=>{
-                                            const target = e.target;
-                                            target.style.display = "none";
-                                            if (target.parentElement) {
-                                                target.parentElement.innerHTML = '<div class="w-full h-full rounded-xl bg-gradient-to-br from-purple-500 via-purple-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm sm:text-xl">AI</div>';
-                                            }
-                                        }
+                                        className: "w-full h-full object-contain rounded-md"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 284,
+                                        lineNumber: 289,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 283,
+                                    lineNumber: 288,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -418,18 +399,18 @@ function Nav() {
                                     children: "Bunyad"
                                 }, void 0, false, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 299,
+                                    lineNumber: 295,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 282,
+                            lineNumber: 287,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 281,
+                        lineNumber: 286,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -437,9 +418,7 @@ function Nav() {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/",
-                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full
-              ${pathname === "/" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"}
-              ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
+                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full ${pathname === "/" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"} ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
                                 title: "Dashboard",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -454,12 +433,12 @@ function Nav() {
                                             d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 315,
+                                            lineNumber: 322,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 314,
+                                        lineNumber: 316,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -467,7 +446,7 @@ function Nav() {
                                         children: "Dashboard"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 317,
+                                        lineNumber: 329,
                                         columnNumber: 13
                                     }, this)
                                 ]
@@ -478,9 +457,7 @@ function Nav() {
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>router.push("/subscribe"),
-                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full
-              ${pathname === "/subscribe" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"}
-              ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
+                                className: `flex items-center gap-3 p-2 cursor-pointer rounded-lg transition-all w-full ${pathname === "/subscribe" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"} ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
                                 title: "Plans",
                                 type: "button",
                                 children: [
@@ -496,12 +473,12 @@ function Nav() {
                                             d: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 330,
+                                            lineNumber: 353,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 329,
+                                        lineNumber: 347,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -509,54 +486,13 @@ function Nav() {
                                         children: "Plans"
                                     }, void 0, false, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 332,
+                                        lineNumber: 360,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/Nav.tsx",
-                                lineNumber: 321,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
-                                href: "/about",
-                                className: `flex items-center gap-3 p-2 rounded-lg transition-all w-full
-              ${pathname === "/about" ? "bg-purple-600/50 text-white shadow-lg" : "text-purple-200 hover:bg-purple-700/30 hover:text-white"}
-              ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
-                                title: "Homepage",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                        className: "w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0",
-                                        fill: "none",
-                                        viewBox: "0 0 24 24",
-                                        stroke: "currentColor",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                            strokeLinecap: "round",
-                                            strokeLinejoin: "round",
-                                            strokeWidth: 2,
-                                            d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                        }, void 0, false, {
-                                            fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 343,
-                                            columnNumber: 15
-                                        }, this)
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 342,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: `${mobileOpen ? "inline-block" : "hidden"} sm:hidden text-sm font-medium`,
-                                        children: "Homepage"
-                                    }, void 0, false, {
-                                        fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 345,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/components/Nav.tsx",
-                                lineNumber: 335,
+                                lineNumber: 337,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -575,9 +511,7 @@ function Nav() {
                                     onClick: ()=>setOpen((s)=>!s),
                                     "aria-haspopup": "true",
                                     "aria-expanded": open,
-                                    className: `w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer
-                text-purple-200 hover:bg-purple-700/30 hover:text-white
-                ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
+                                    className: `w-full flex items-center gap-2 p-2 rounded-lg transition-all cursor-pointer text-purple-200 hover:bg-purple-700/30 hover:text-white ${mobileOpen ? "justify-start pl-3" : "justify-center"}`,
                                     title: username,
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -585,7 +519,7 @@ function Nav() {
                                             children: userInitial
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 361,
+                                            lineNumber: 382,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -593,13 +527,13 @@ function Nav() {
                                             children: username
                                         }, void 0, false, {
                                             fileName: "[project]/components/Nav.tsx",
-                                            lineNumber: 364,
+                                            lineNumber: 385,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 352,
+                                    lineNumber: 373,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -612,7 +546,7 @@ function Nav() {
                                                 children: username
                                             }, void 0, false, {
                                                 fileName: "[project]/components/Nav.tsx",
-                                                lineNumber: 370,
+                                                lineNumber: 400,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -620,7 +554,7 @@ function Nav() {
                                                 children: renderSubscriptionRow()
                                             }, void 0, false, {
                                                 fileName: "[project]/components/Nav.tsx",
-                                                lineNumber: 374,
+                                                lineNumber: 403,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -634,59 +568,59 @@ function Nav() {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/Nav.tsx",
-                                                            lineNumber: 384,
+                                                            lineNumber: 410,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                             children: "Logout"
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/Nav.tsx",
-                                                            lineNumber: 385,
+                                                            lineNumber: 411,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/Nav.tsx",
-                                                    lineNumber: 379,
+                                                    lineNumber: 405,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/Nav.tsx",
-                                                lineNumber: 378,
+                                                lineNumber: 404,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/Nav.tsx",
-                                        lineNumber: 369,
+                                        lineNumber: 399,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/Nav.tsx",
-                                    lineNumber: 368,
+                                    lineNumber: 394,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/Nav.tsx",
-                            lineNumber: 351,
+                            lineNumber: 372,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/Nav.tsx",
-                        lineNumber: 350,
+                        lineNumber: 371,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/Nav.tsx",
-                lineNumber: 271,
+                lineNumber: 276,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true);
 }
-_s(Nav, "iGNjdZhZjw94W1j+QsBm6mdYnZc=", false, function() {
+_s(Nav, "YiQq01F8or/W+AQApr7ECbjPzjY=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"]

@@ -61,7 +61,23 @@ const config = {
     */ "/((?!api|_next|static|favicon.ico|login).*)",
         "/"
     ]
-};
+}; // import { NextResponse } from "next/server";
+ // import type { NextRequest } from "next/server";
+ // export function middleware(req: NextRequest) {
+ //   const maintenanceEnabled = process.env.MAINTENANCE_MODE === "true";
+ //   // Allow direct access to the maintenance page
+ //   if (req.nextUrl.pathname.startsWith("/maintenance.html")) {
+ //     return NextResponse.next();
+ //   }
+ //   // Redirect everything to the maintenance page
+ //   if (maintenanceEnabled) {
+ //     return NextResponse.redirect(new URL("/maintenance.html", req.url));
+ //   }
+ //   return NextResponse.next();
+ // }
+ // export const config = {
+ //   matcher: ["/((?!_next|api).*)"],
+ // };
 }),
 ]);
 

@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AI Image Generator - Transform Images with AI",
-  description: "Upload any image and transform it with AI-powered editing. Add, remove, or modify elements with simple text prompts.",
+  description:
+    "Upload any image and transform it with AI-powered editing. Add, remove, or modify elements with simple text prompts.",
 };
 
 export default function RootLayout({

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function LoginPage(): JSX.Element {
   const router = useRouter();
@@ -70,15 +71,12 @@ export default function LoginPage(): JSX.Element {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 p-6">
-      <div className="w-full max-w-md bg-purple-800/30 backdrop-blur-sm border border-purple-700/50 rounded-2xl shadow-lg p-8">
-        <div className="mb-4 flex justify-center">
+      <div className="w-full max-w-md bg-purple-500/15 backdrop-blur-sm border border-purple-400/20 rounded-2xl shadow-lg p-6">
+        <div className="mb-2 flex justify-center items-center">
           <img
-            src="/logo.png"
-            alt="App logo"
-            className="w-20 h-20 object-contain rounded-md"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
+            src="/images/logo.png"
+            alt="Logo"
+            className="w-50 h-50 object-contain rounded-md"
           />
         </div>
 
@@ -92,8 +90,8 @@ export default function LoginPage(): JSX.Element {
             }}
             className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
               !isSignup
-                ? "bg-gradient-to-r from-sky-500 to-indigo-500 text-white shadow-md"
-                : "bg-purple-700/30 text-purple-200 hover:bg-purple-700/50"
+                ? "bg-gradient-to-r from-sky-500 to-indigo-500 cursor-pointer text-white shadow-md"
+                : "bg-purple-700/30 text-purple-200 hover:bg-purple-700/50 cursor-pointer"
             }`}
           >
             Sign In
@@ -106,8 +104,8 @@ export default function LoginPage(): JSX.Element {
             }}
             className={`flex-1 px-4 py-2 rounded-lg font-medium transition-all ${
               isSignup
-                ? "bg-gradient-to-r from-sky-500 to-indigo-500 text-white shadow-md"
-                : "bg-purple-700/30 text-purple-200 hover:bg-purple-700/50"
+                ? "bg-gradient-to-r from-sky-500 to-indigo-500 cursor-pointer text-white shadow-md"
+                : "bg-purple-700/30 text-purple-200 hover:bg-purple-700/50 cursor-pointer"
             }`}
           >
             Sign Up
