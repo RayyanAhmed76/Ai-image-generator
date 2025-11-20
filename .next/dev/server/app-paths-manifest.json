@@ -1,9 +1,5 @@
 {
-  "/about/page": "app/about/page.js",
   "/api/check-usage/route": "app/api/check-usage/route.js",
-  "/api/fetch-image/route": "app/api/fetch-image/route.js",
-  "/api/fetch_result/route": "app/api/fetch_result/route.js",
-  "/api/generate/route": "app/api/generate/route.js",
   "/api/login/route": "app/api/login/route.js",
   "/api/logout/route": "app/api/logout/route.js",
   "/login/page": "app/login/page.js",

@@ -285,7 +285,7 @@ export default function Nav() {
         {/* Logo */}
         <div className="mb-4 sm:mb-8 w-full flex items-center justify-center sm:justify-center px-3">
           <Link href="/" className="flex items-center gap-3 w-full">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1.5 sm:p-2 flex items-center justify-center bg-zinc-300 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl p-1.5 sm:p-2 flex items-center justify-center  shadow-lg hover:shadow-xl transition-shadow">
               <img
                 src="/images/logo.png"
                 alt="Logo"
