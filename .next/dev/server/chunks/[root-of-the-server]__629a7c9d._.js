@@ -138,7 +138,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app
 const FREE_TRIES_LIMIT = 2;
 async function POST(req) {
     try {
-        const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getCurrentUser"])(req);
+        const user = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$auth$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getCurrentUser"])(req); // adapt if your auth requires NextRequest
         if (!user) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 error: "Unauthorized"
@@ -157,7 +157,19 @@ async function POST(req) {
                 });
             }
         }
-        const body = await req.json();
+        // read request manually
+        const buf = await req.arrayBuffer();
+        const text = new TextDecoder().decode(buf);
+        let body;
+        try {
+            body = JSON.parse(text);
+        } catch  {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: "Invalid JSON"
+            }, {
+                status: 400
+            });
+        }
         const prompt = (body.prompt || "").trim();
         const base64Image = (body.base64Image || "").trim();
         if (!prompt || !base64Image) {
@@ -191,7 +203,7 @@ async function POST(req) {
             })
         });
         const json = await resp.json();
-        // Helper: try to find image in initial response
+        // Extract image as before
         const tryExtractImage = (obj)=>{
             if (!obj) return null;
             if (typeof obj.image_url === "string" && obj.image_url) return obj.image_url;
@@ -208,7 +220,6 @@ async function POST(req) {
         };
         const image = tryExtractImage(json);
         if (image) {
-            // Track usage for free users
             if (!user.isSubscribed) {
                 await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].usage.create({
                     data: {
@@ -238,7 +249,6 @@ async function POST(req) {
                 status: 200
             });
         }
-        // Unexpected: no image and no polling URL
         console.error("Unexpected response from Flux:", json);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Unexpected response from Flux"

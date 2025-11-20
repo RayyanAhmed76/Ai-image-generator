@@ -364,25 +364,43 @@ export default function Page(): JSX.Element {
   };
   useEffect(() => {
     if (!isDragging) return;
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!imagePreview || !resultUrl) return;
-      const sliderContainer = document.querySelector(
-        "[data-slider-container]"
-      ) as HTMLElement;
-      if (!sliderContainer) return;
+
+    const sliderContainer = document.querySelector(
+      "[data-slider-container]"
+    ) as HTMLElement;
+
+    if (!sliderContainer) return;
+
+    const updateSlider = (clientX: number) => {
       const rect = sliderContainer.getBoundingClientRect();
-      const x = e.clientX - rect.left;
+      const x = clientX - rect.left;
       const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
       setSliderPosition(percentage);
     };
-    const handleMouseUp = () => setIsDragging(false);
+
+    const handleMouseMove = (e: MouseEvent) => updateSlider(e.clientX);
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // stops screen from scrolling while sliding
+      updateSlider(e.touches[0].clientX);
+    };
+
+    const handleEnd = () => setIsDragging(false);
+
     document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("mouseup", handleEnd);
+
+    document.addEventListener("touchmove", handleTouchMove, { passive: false });
+    document.addEventListener("touchend", handleEnd);
+
     return () => {
       document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("mouseup", handleEnd);
+
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleEnd);
     };
-  }, [isDragging, imagePreview, resultUrl]);
+  }, [isDragging]);
 
   const handleUseGeneratedImage = async () => {
     if (!resultUrl) return;
@@ -613,8 +631,10 @@ export default function Page(): JSX.Element {
                           className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-ew-resize z-10"
                           style={{ left: `${sliderPosition || 50}%` }}
                           onMouseDown={handleSliderStart}
-                          // also allow touch dragging
-                          onTouchStart={() => setIsDragging(true)}
+                          onTouchStart={(e) => {
+                            e.preventDefault();
+                            setIsDragging(true);
+                          }}
                         >
                           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center">
                             <svg
