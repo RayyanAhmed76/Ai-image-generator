@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import { getCurrentUser, getUserUsageCount } from "../../../lib/auth";
 import { prisma } from "../../../lib/prisma";
 
 type ReqBody = { prompt?: string; base64Image?: string };
-
 const FREE_TRIES_LIMIT = 2;
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser(req);
+    const user = await getCurrentUser(req as any); // adapt if your auth requires NextRequest
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -27,7 +25,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const body: ReqBody = await req.json();
+    // read request manually
+    const buf = await req.arrayBuffer();
+    const text = new TextDecoder().decode(buf);
+    let body: ReqBody;
+    try {
+      body = JSON.parse(text);
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    }
+
     const prompt = (body.prompt || "").trim();
     const base64Image = (body.base64Image || "").trim();
     if (!prompt || !base64Image) {
@@ -63,7 +70,7 @@ export async function POST(req: NextRequest) {
 
     const json = await resp.json();
 
-    // Helper: try to find image in initial response
+    // Extract image as before
     const tryExtractImage = (obj: any): string | null => {
       if (!obj) return null;
       if (typeof obj.image_url === "string" && obj.image_url)
@@ -86,26 +93,15 @@ export async function POST(req: NextRequest) {
 
     const image = tryExtractImage(json);
     if (image) {
-      // Track usage for free users
       if (!user.isSubscribed) {
-        await prisma.usage.create({
-          data: {
-            userId: user.id,
-            prompt,
-          },
-        });
+        await prisma.usage.create({ data: { userId: user.id, prompt } });
       }
       return NextResponse.json({ image }, { status: 200 });
     }
 
     if (typeof json?.polling_url === "string") {
       if (!user.isSubscribed) {
-        await prisma.usage.create({
-          data: {
-            userId: user.id,
-            prompt,
-          },
-        });
+        await prisma.usage.create({ data: { userId: user.id, prompt } });
       }
       return NextResponse.json(
         { polling_url: json.polling_url },
@@ -113,7 +109,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Unexpected: no image and no polling URL
     console.error("Unexpected response from Flux:", json);
     return NextResponse.json(
       { error: "Unexpected response from Flux" },
